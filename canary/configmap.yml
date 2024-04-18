@@ -1,0 +1,49 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: canary-nginx-configmap-1
+  namespace: canary
+data:
+  nginx-http-port: "80"
+  nginx-conf: |
+    events {}         # event context have to be defined to consider config valid
+    http {
+    server {
+        listen 80;
+        server_name _;
+        root        /var/www/html/canary-nginx;
+      }
+    }
+  nginx-site: |
+    <!DOCTYPE html>
+    <html>
+    <body>
+        <h1>Deployment 1</h1>
+    </body>
+    </html>
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: canary-nginx-configmap-2
+  namespace: canary
+data:
+  nginx-http-port: "80"
+  nginx-conf: |
+    events {}         # event context have to be defined to consider config valid
+    http {
+    server {
+        listen 80;
+        server_name _;
+        root        /var/www/html/canary-nginx;
+      }
+    }
+  nginx-site: |
+    <!DOCTYPE html>
+    <html>
+    <body>
+        <h1>Deployment 2</h1>
+    </body>
+    </html>

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: canary-nginx-service
+  namespace: canary
+  labels:
+    app: canary-nginx
+spec:
+  ports:
+    - port: 9001
+      targetPort: 80
+      protocol: TCP
+      name: nginx-http
+  type: ClusterIP
+  selector:
+    app: canary-nginx

@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-rollup
+  labels:
+    app: deploy-rollup
+  namespace: default
+spec:
+  replicas: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+     maxSurge: 4
+     maxUnavailable: 4
+  selector:
+    matchLabels:
+      app: deploy-rollup
+  template:
+    metadata:
+      labels:
+        app: deploy-rollup
+    spec:
+      containers:
+      - image: nginx:1.19
+        name: nginx
+        imagePullPolicy: IfNotPresent
+      - image: wbitt/network-multitool
+        name: multitool
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: HTTP_PORT
+            value: '8080'
+          - name: HTTPS_PORT
+            value: '8081'
